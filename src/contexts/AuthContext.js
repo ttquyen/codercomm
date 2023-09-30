@@ -1,5 +1,6 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import apiService from "../app/apiService";
+import { isValidToken } from "../utils/jwt";
 
 const initialState = {
   isInitialized: false, //help to handle refreshing page
@@ -17,7 +18,12 @@ const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
     case INITIALIZE:
-      break;
+      return {
+        ...state,
+        isInitialized: true,
+        isAuthenticated: payload.isAuthenticated,
+        user: payload.user,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -53,8 +59,39 @@ const setSession = (accessToken) => {
     delete apiService.defaults.headers.common.Authorization;
   }
 };
+
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        const accessToken = window.localStorage.getItem("accessToken");
+        if (accessToken && isValidToken(accessToken)) {
+          setSession(accessToken);
+          const response = await apiService.get("/users/me");
+          const user = response.data;
+          dispatch({
+            type: INITIALIZE,
+            payload: { user, isAuthenticated: true },
+          });
+        } else {
+          setSession(null);
+          dispatch({
+            type: INITIALIZE,
+            payload: { user: null, isAuthenticated: false },
+          });
+        }
+      } catch (error) {
+        setSession(null);
+        dispatch({
+          type: INITIALIZE,
+          payload: { user: null, isAuthenticated: false },
+        });
+      }
+    };
+
+    initialize();
+  }, []);
 
   const login = async ({ email, password }, callback) => {
     const response = await apiService.post("/auth/login", {
@@ -66,6 +103,7 @@ function AuthProvider({ children }) {
     dispatch({ type: LOGIN_SUCCESS, payload: user });
     callback(); //navigate to homepage when login success
   };
+
   const register = async ({ email, password, name }, callback) => {
     const response = await apiService.post("/users", {
       name,
@@ -79,7 +117,7 @@ function AuthProvider({ children }) {
   };
 
   const logout = (callback) => {
-    setSession("");
+    setSession(null);
     dispatch({ type: LOGOUT });
     callback();
   };
