@@ -49,18 +49,14 @@ function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const login = async ({ email, password }, callback) => {
-    try {
-      const response = await apiService.post("/auth/login", {
-        email,
-        password,
-      });
-      const { user, accessToken } = response.data;
-      setSession(accessToken); //save the accessToken to header of apiService
-      dispatch({ type: LOGIN_SUCCESS, payload: user });
-      callback(); //navigate to homepage when login success
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await apiService.post("/auth/login", {
+      email,
+      password,
+    });
+    const { user, accessToken } = response.data;
+    setSession(accessToken); //save the accessToken to header of apiService
+    dispatch({ type: LOGIN_SUCCESS, payload: user });
+    callback(); //navigate to homepage when login success
   };
 
   return (
