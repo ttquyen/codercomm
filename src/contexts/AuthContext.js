@@ -25,9 +25,17 @@ const reducer = (state, action) => {
         user: payload.user,
       };
     case REGISTER_SUCCESS:
-      break;
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: payload.user,
+      };
     case LOGOUT:
-      break;
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
     case UPDATE_PROFILE:
       break;
 
@@ -58,9 +66,26 @@ function AuthProvider({ children }) {
     dispatch({ type: LOGIN_SUCCESS, payload: user });
     callback(); //navigate to homepage when login success
   };
+  const register = async ({ email, password, name }, callback) => {
+    const response = await apiService.post("/users", {
+      name,
+      email,
+      password,
+    });
+    const { user, accessToken } = response.data;
+    setSession(accessToken); //save the accessToken to header of apiService
+    dispatch({ type: REGISTER_SUCCESS, payload: user });
+    callback();
+  };
+
+  const logout = (callback) => {
+    setSession("");
+    dispatch({ type: LOGOUT });
+    callback();
+  };
 
   return (
-    <AuthContext.Provider value={{ ...state, login }}>
+    <AuthContext.Provider value={{ ...state, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
