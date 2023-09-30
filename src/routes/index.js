@@ -8,11 +8,19 @@ import RegisterPage from "../pages/registerPage/RegisterPage";
 import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 import MainLayout from "../layouts/MainLayout";
 import BlankLayout from "../layouts/BlankLayout";
+import AuthRequire from "./AuthRequire";
 
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<MainLayout />}>
+      <Route
+        path="/"
+        element={
+          <AuthRequire>
+            <MainLayout />
+          </AuthRequire>
+        }
+      >
         <Route index element={<HomePage />} />
         <Route path="account" element={<AccountPage />} />
         <Route path="user/:userId" element={<UserProfilePage />} />
