@@ -66,7 +66,7 @@ function LoginPage() {
             <Alert severity="error">{errors.responseError.message}</Alert>
           )}
           <Alert severity="info">
-            Don't you have an account?{" "}
+            Don't have an account?{" "}
             <Link variant="subtitle2" to="/register" component={RouterLink}>
               Get started
             </Link>
