@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import FTextField from "../../components/form/FTextField";
-import FormProvider from "../../components/form/FormProvider";
+import useAuth from "../hooks/useAuth";
+import FTextField from "../components/form/FTextField";
+import FormProvider from "../components/form/FormProvider";
 import {
   Alert,
   Container,

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import Profile from "../../features/user/Profile";
-import FriendList from "../../features/friend/FriendList";
-import FriendRequests from "../../features/friend/FriendRequests";
-import AddFriend from "../../features/friend/AddFriend";
+import Profile from "../features/user/Profile";
+import FriendList from "../features/friend/FriendList";
+import FriendRequests from "../features/friend/FriendRequests";
+import AddFriend from "../features/friend/AddFriend";
 import { Box, Card, Container, Tab, Tabs } from "@mui/material";
 import { capitalCase } from "change-case";
-import ProfileCover from "../../features/user/ProfileCover";
+import ProfileCover from "../features/user/ProfileCover";
 import { styled } from "@mui/material/styles";
 
 const TabsWrapperStyle = styled("div")(({ theme }) => ({
@@ -73,6 +73,7 @@ function HomePage() {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
+                disableRipple
               />
             ))}
           </Tabs>

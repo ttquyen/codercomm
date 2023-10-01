@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "../pages/loginPage/LoginPage";
-import HomePage from "../pages/homePage/HomePage";
-import AccountPage from "../pages/accountPage/AccountPage";
-import UserProfilePage from "../pages/userProfilePage/UserProfilePage";
-import RegisterPage from "../pages/registerPage/RegisterPage";
-import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
+import LoginPage from "../pages/LoginPage";
+import HomePage from "../pages/HomePage";
+import AccountPage from "../pages/AccountPage";
+import UserProfilePage from "../pages/UserProfilePage";
+import RegisterPage from "../pages/RegisterPage";
+import NotFoundPage from "../pages/NotFoundPage";
 import MainLayout from "../layouts/MainLayout";
 import BlankLayout from "../layouts/BlankLayout";
 import AuthRequire from "./AuthRequire";
