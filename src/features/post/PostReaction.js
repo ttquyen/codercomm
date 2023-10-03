@@ -3,12 +3,16 @@ import React from "react";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import { useDispatch } from "react-redux";
+import { sendPostReactionAsync } from "./postSlice";
 
 function PostReaction({ post }) {
   const { like, dislike } = post?.reactions;
 
+  const dispatch = useDispatch();
+
   const handleClick = (emoji) => {
     console.log(emoji);
+    dispatch(sendPostReactionAsync({ postId: post._id, emoji }));
   };
   return (
     <CardActions disableSpacing>

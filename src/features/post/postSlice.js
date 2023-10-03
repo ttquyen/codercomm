@@ -45,6 +45,13 @@ const slice = createSlice({
       });
       state.totalPost = count;
     },
+    sendPostReactionSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      console.log(action.payload);
+      const { postId, reactions } = action.payload;
+      state.postsById[postId].reactions = { ...reactions };
+    },
   },
 });
 export const createPostAsync =
@@ -58,6 +65,7 @@ export const createPostAsync =
       dispatch(slice.actions.hasError(error.message));
     }
   };
+
 export const getPostListAsync =
   ({ userId, page, limit = POST_PER_PAGE }) =>
   async (dispatch) => {
@@ -68,6 +76,27 @@ export const getPostListAsync =
         params,
       });
       dispatch(slice.actions.getPostSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+
+export const sendPostReactionAsync =
+  ({ postId, emoji }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await apiService.post("/reactions", {
+        targetType: "Post",
+        targetId: postId,
+        emoji,
+      });
+      dispatch(
+        slice.actions.sendPostReactionSuccess({
+          reactions: response.data,
+          postId,
+        })
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
     }
