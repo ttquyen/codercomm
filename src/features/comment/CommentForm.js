@@ -12,6 +12,7 @@ function CommentForm({ postId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createCommentAsync({ content, postId }));
+    setContent("");
   };
   return (
     <form onSubmit={handleSubmit}>

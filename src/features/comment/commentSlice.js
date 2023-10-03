@@ -1,9 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
+import { COMMENT_PER_POST } from "../../app/config";
 
 const initialState = {
   isLoading: false,
   error: null,
+  commentsById: {
+    //"cmtID1":"content1"
+    //"cmtID2":"content2"
+  },
+  commentsByPost: {
+    //"postID1":["cmtID1", "cmtID2"]
+  },
+  currentPageByPost: {
+    //"postID1":2
+    //"postID2":1
+  },
+  totalCommentsByPost: {
+    //"postID1":6
+    //"postID2":2
+  },
 };
 const slice = createSlice({
   name: "comment",
@@ -20,6 +36,17 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    getCommentSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { comments, count, page, postId, totalPage } = action.payload;
+      comments.forEach((comment) => {
+        state.commentsById[comment._id] = comment;
+      });
+      state.commentsByPost[postId] = comments.map((cmt) => cmt._id).reverse();
+      state.currentPageByPost[postId] = page;
+      state.totalCommentsByPost[postId] = count;
+    },
   },
 });
 export const createCommentAsync =
@@ -29,6 +56,23 @@ export const createCommentAsync =
     try {
       const response = await apiService.post("/comments", { content, postId });
       dispatch(slice.actions.createCommentSuccess(response.data));
+      dispatch(getCommentListAsync({ postId }));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+export const getCommentListAsync =
+  ({ postId, page, limit = COMMENT_PER_POST }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const params = { page, limit };
+      const response = await apiService.get(`/posts/${postId}/comments`, {
+        params,
+      });
+      dispatch(
+        slice.actions.getCommentSuccess({ ...response.data, postId, page })
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
     }
