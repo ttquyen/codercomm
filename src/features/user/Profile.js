@@ -22,7 +22,7 @@ function Profile({ profile }) {
         <Stack spacing={3}>
           {/* only show form for current user */}
           {user?._id === profile?._id && <PostForm />}
-          <PostList />
+          <PostList userId={profile?._id} />
         </Stack>
       </Grid>
     </Grid>
