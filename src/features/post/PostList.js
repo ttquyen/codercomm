@@ -15,7 +15,6 @@ function PostList({ userId }) {
 
   useEffect(() => {
     if (userId) {
-      console.log("first");
       dispatch(getPostListAsync({ userId, page }));
     }
   }, [userId, page, dispatch]);

@@ -31,7 +31,6 @@ function PostForm() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.post);
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(createPostAsync(data)).then(() => reset());
   };
   return (

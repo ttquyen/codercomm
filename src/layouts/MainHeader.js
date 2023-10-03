@@ -11,7 +11,6 @@ import Logo from "../components/Logo";
 import { Avatar, Divider } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 function MainHeader() {
-  // const [auth, setAuth] = React.useState(true);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
