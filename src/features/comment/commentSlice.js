@@ -47,6 +47,14 @@ const slice = createSlice({
       state.currentPageByPost[postId] = page;
       state.totalCommentsByPost[postId] = count;
     },
+
+    sendCommentReactionSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      console.log(action.payload);
+      const { commentId, reactions } = action.payload;
+      state.commentsById[commentId].reactions = { ...reactions };
+    },
   },
 });
 export const createCommentAsync =
@@ -72,6 +80,27 @@ export const getCommentListAsync =
       });
       dispatch(
         slice.actions.getCommentSuccess({ ...response.data, postId, page })
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+    }
+  };
+
+export const sendCommentReactionAsync =
+  ({ commentId, emoji }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await apiService.post("/reactions", {
+        targetType: "Comment",
+        targetId: commentId,
+        emoji,
+      });
+      dispatch(
+        slice.actions.sendCommentReactionSuccess({
+          reactions: response.data,
+          commentId,
+        })
       );
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
