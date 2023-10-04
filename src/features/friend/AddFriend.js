@@ -26,7 +26,11 @@ function AddFriend() {
   // getUsersListAsync
   useEffect(() => {
     dispatch(
-      getUsersListAsync({ page: page + 1, limit: rowsPerPage, filterName })
+      getUsersListAsync({
+        page: page + 1,
+        limit: rowsPerPage,
+        name: filterName,
+      })
     );
   }, [filterName, rowsPerPage, page, dispatch]);
   const handleChangePage = (event, newPage) => {

@@ -70,11 +70,11 @@ const slice = createSlice({
   },
 });
 export const getUsersListAsync =
-  ({ filterName, page = 1, limit = 12 }) =>
+  ({ name, page = 1, limit = 12 }) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const params = { filterName, page, limit };
+      const params = { name, page, limit };
       const response = await apiService.get(`/users`, { params });
       dispatch(slice.actions.getUserListSuccess(response.data));
     } catch (error) {
