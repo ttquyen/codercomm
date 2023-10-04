@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
+import { toast } from "react-toastify";
 
 const initialState = {
   isLoading: false,
@@ -79,6 +80,7 @@ export const getUsersListAsync =
       dispatch(slice.actions.getUserListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 export const sendFriendRequestAsync = (targetUserId) => async (dispatch) => {
@@ -93,8 +95,10 @@ export const sendFriendRequestAsync = (targetUserId) => async (dispatch) => {
         targetUserId,
       })
     );
+    toast.success("Request sent");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 export const declineFriendRequestAsync = (targetUserId) => async (dispatch) => {
@@ -109,8 +113,10 @@ export const declineFriendRequestAsync = (targetUserId) => async (dispatch) => {
         targetUserId,
       })
     );
+    toast.success("Request declined");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 export const acceptFriendRequestAsync = (targetUserId) => async (dispatch) => {
@@ -125,8 +131,10 @@ export const acceptFriendRequestAsync = (targetUserId) => async (dispatch) => {
         targetUserId,
       })
     );
+    toast.success("Friend accepted");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 export const cancelFriendRequestAsync = (targetUserId) => async (dispatch) => {
@@ -141,8 +149,10 @@ export const cancelFriendRequestAsync = (targetUserId) => async (dispatch) => {
         targetUserId,
       })
     );
+    toast.success("Request cancelled");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 export const deleteFriendAsync = (targetUserId) => async (dispatch) => {
@@ -155,8 +165,10 @@ export const deleteFriendAsync = (targetUserId) => async (dispatch) => {
         targetUserId,
       })
     );
+    toast.success("Friend removed");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
   }
 };
 export default slice.reducer;
