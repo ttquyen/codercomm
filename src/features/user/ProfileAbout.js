@@ -19,7 +19,7 @@ const IconStyle = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(2),
 }));
 function ProfileAbout({ profile }) {
-  const { city, email, jobTitle, aboutMe, company, country } = profile;
+  const { city, email, aboutMe, company, country } = profile;
 
   return (
     <Card>

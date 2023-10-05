@@ -19,7 +19,7 @@ const TabsWrapperStyle = styled("div")(({ theme }) => ({
   width: "100%",
   display: "flex",
   position: "absolute",
-  backgroundColor: "fff",
+  backgroundColor: "#fff",
   [theme.breakpoints.up("sm")]: { justifyContent: "center" },
   [theme.breakpoints.up("md")]: {
     justifyContent: "flex-end",
