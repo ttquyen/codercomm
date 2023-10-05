@@ -32,7 +32,6 @@ const InfoStyle = styled("div")(({ theme }) => ({
 }));
 
 function ProfileCover({ profile }) {
-  console.log(profile);
   const { user } = useAuth();
   const currentUserId = user?._id;
   const {

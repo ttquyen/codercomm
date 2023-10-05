@@ -12,11 +12,13 @@ function Profile({ profile }) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
-        <Stack spacing={3}>
-          <ProfileScoreCard profile={profile} />
-          <ProfileAbout profile={profile} />
-          <ProfileSocial profile={profile} />
-        </Stack>
+        {profile && (
+          <Stack spacing={3}>
+            <ProfileScoreCard profile={profile} />
+            <ProfileAbout profile={profile} />
+            <ProfileSocial profile={profile} />
+          </Stack>
+        )}
       </Grid>
       <Grid item xs={12} md={8}>
         <Stack spacing={3}>
