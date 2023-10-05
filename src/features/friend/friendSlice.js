@@ -68,6 +68,30 @@ const slice = createSlice({
       const { targetUserId } = action.payload;
       state.usersById[targetUserId].friendship = null;
     },
+    getFriendListSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+
+      const { users, count, totalPages } = action.payload;
+      users.forEach((user) => {
+        state.usersById[user._id] = user;
+      });
+      state.currentPageUsers = users.map((user) => user._id);
+      state.totalPages = totalPages;
+      state.count = count;
+    },
+    getFriendRequestListSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+
+      const { users, count, totalPages } = action.payload;
+      users.forEach((user) => {
+        state.usersById[user._id] = user;
+      });
+      state.currentPageUsers = users.map((user) => user._id);
+      state.totalPages = totalPages;
+      state.count = count;
+    },
   },
 });
 export const getUsersListAsync =
@@ -171,4 +195,34 @@ export const deleteFriendAsync = (targetUserId) => async (dispatch) => {
     toast.error(error.message);
   }
 };
+
+export const getFriendListAsync =
+  ({ name, page = 1, limit = 12 }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const params = { name, page, limit };
+      const response = await apiService.get(`/friends`, { params });
+      dispatch(slice.actions.getFriendListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+export const getFriendRequestListAsync =
+  ({ name, page = 1, limit = 12 }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const params = { name, page, limit };
+      const response = await apiService.get(`/friends/requests/incoming`, {
+        params,
+      });
+      dispatch(slice.actions.getFriendRequestListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+
 export default slice.reducer;

@@ -83,7 +83,7 @@ function FriendAction({ currentUserId, targetUserId, friendship, sx }) {
     </Button>
   );
   const btnGroupAction = (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="row" spacing={2} sx={{ ...sx }}>
       {btnDecline}
       {btnAccept}
     </Stack>
