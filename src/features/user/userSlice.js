@@ -25,6 +25,12 @@ const slice = createSlice({
 
       state.selectedUser = action.payload;
     },
+    updateUserProfileSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+
+      state.updatedProfile = action.payload;
+    },
   },
 });
 export const getUserByIdAsync =
@@ -35,6 +41,33 @@ export const getUserByIdAsync =
       const response = await apiService.get(`/users/${id}`);
 
       dispatch(slice.actions.getUserByIdSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+export const updateAccountAsync =
+  ({ id, ...params }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const data = {
+        name: params?.name,
+        coverUrl: params?.coverUrl,
+        aboutMe: params?.aboutMe,
+        city: params?.city,
+        country: params?.country,
+        company: params?.company,
+        jobTitle: params?.jobTitle,
+        facebookLink: params?.facebookLink,
+        instagramLink: params?.instagramLink,
+        twitterLink: params?.ftwitterink,
+        linkedinLink: params?.linkedinLink,
+      };
+      const response = await apiService.put(`/users/${id}`, data);
+
+      dispatch(slice.actions.updateUserProfileSuccess(response.data));
+      toast.success("Update Profile successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
       toast.error(error.message);

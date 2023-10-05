@@ -67,15 +67,18 @@ function PostCard({ post }) {
         {image && (
           <CardMedia
             component="img"
-            height="200"
+            height="300"
             image={image}
             alt="post image"
             sx={{
-              pX: 1,
+              p: 1,
               borderRadius: 2,
-              objectFit: "cover",
-              width: 1,
-              overflow: "hidden",
+              "& img": {
+                objectFit: "cover",
+                width: 1,
+                height: 1,
+                overflow: "hidden",
+              },
             }}
           />
         )}

@@ -15,7 +15,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 const IconStyle = styled(Box)(({ theme }) => ({
   width: 20,
   height: 20,
-  marginTop: 1,
+  marginBottom: 6,
   flexShrink: 0,
   marginRight: theme.spacing(2),
 }));
@@ -61,10 +61,10 @@ function ProfileSocial({ profile }) {
   ];
   return (
     <Card>
-      <CardHeader title="About" variant="h6" />
+      <CardHeader title="Social" variant="h6" />
       <Stack sx={{ px: 3, py: 2 }} spacing={2}>
         {SOCIALS.map((social) => (
-          <Stack direction="row" key={social.name}>
+          <Stack direction="row" alignItems="center" key={social.name}>
             {social.icon}
             <Typography variant="body2">
               <Link component="span" variant="subtitle2" color="text.primary">
