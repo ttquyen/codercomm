@@ -1,9 +1,27 @@
-import { Avatar, Box, Paper, Stack, Typography } from "@mui/material";
-import React from "react";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
 import { fDateTime } from "../../utils/formatTime";
 import CommentReaction from "./CommentReaction";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteCommentDialog from "./DeteleCommentDialog";
+import { useDispatch } from "react-redux";
+import { getCommentListAsync } from "./commentSlice";
+function CommentCard({ comment, postId }) {
+  const [openDel, setOpenDel] = useState(false);
+  const dispatch = useDispatch();
 
-function CommentCard({ comment }) {
+  const handleDelete = (message) => {
+    if (message === "OK") {
+      dispatch(getCommentListAsync({ postId: postId, page: 1 }));
+    }
+  };
   return (
     <Stack direction="row" spacing={2}>
       <Avatar alt={comment.author?.name} src={comment.author?.avatarUrl} />
@@ -17,9 +35,14 @@ function CommentCard({ comment }) {
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {comment.author?.name}
           </Typography>
-          <Typography variant="caption" sx={{ color: "text.disabled" }}>
-            {fDateTime(comment.createdAt)}
-          </Typography>
+          <Stack>
+            <Typography variant="caption" sx={{ color: "text.disabled" }}>
+              {fDateTime(comment.createdAt)}
+            </Typography>
+            <IconButton onClick={() => setOpenDel(true)}>
+              <DeleteIcon />
+            </IconButton>
+          </Stack>
         </Stack>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {comment.content}
@@ -28,6 +51,12 @@ function CommentCard({ comment }) {
           <CommentReaction comment={comment} />
         </Box>
       </Paper>
+      <DeleteCommentDialog
+        open={openDel}
+        setOpen={setOpenDel}
+        comment={comment}
+        callback={handleDelete}
+      />
     </Stack>
   );
 }
