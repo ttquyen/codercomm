@@ -3,7 +3,6 @@ import apiService from "../../app/apiService";
 import { POST_PER_PAGE } from "../../app/config";
 import { cloudinaryUpload } from "../../utils/cloundinary";
 import { toast } from "react-toastify";
-import _, { toString } from "lodash";
 
 const initialState = {
   isLoading: false,
@@ -157,7 +156,7 @@ export const editPostAsync =
 export const deletePostAsync = (postId) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
-    const response = await apiService.delete(`/posts/${postId}`);
+    await apiService.delete(`/posts/${postId}`);
 
     dispatch(slice.actions.deletePostSuccess(postId));
     toast.success("Delete Post successfully");

@@ -113,7 +113,7 @@ export const sendCommentReactionAsync =
 export const deleteCommentAsync = (commentId) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
-    const response = await apiService.delete(`/comments/${commentId}`);
+    await apiService.delete(`/comments/${commentId}`);
 
     dispatch(slice.actions.deleteCommentSuccess(commentId));
     toast.success("Delete Comment successfully");

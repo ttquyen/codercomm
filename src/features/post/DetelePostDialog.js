@@ -1,17 +1,9 @@
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
-import React, { useCallback } from "react";
-import {
-  Box,
-  Button,
-  Card,
-  DialogContent,
-  DialogContentText,
-  Stack,
-  alpha,
-} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { Button, DialogContent, DialogContentText } from "@mui/material";
+import { useDispatch } from "react-redux";
 
 import { deletePostAsync } from "./postSlice";
 
