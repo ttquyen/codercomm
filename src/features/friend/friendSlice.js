@@ -210,14 +210,17 @@ export const getFriendListAsync =
     }
   };
 export const getFriendRequestListAsync =
-  ({ name, page = 1, limit = 12 }) =>
+  ({ name, page = 1, limit = 12, requestType }) =>
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
       const params = { name, page, limit };
-      const response = await apiService.get(`/friends/requests/incoming`, {
-        params,
-      });
+      const response = await apiService.get(
+        `/friends/requests/${requestType}`,
+        {
+          params,
+        }
+      );
       dispatch(slice.actions.getFriendRequestListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));

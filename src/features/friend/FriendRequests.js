@@ -7,6 +7,8 @@ import {
   Grid,
   Pagination,
   Stack,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import SearchInput from "./SearchInput";
@@ -23,14 +25,22 @@ function FriendRequests() {
     totalPages,
   } = useSelector((state) => state.friend);
   const users = currentPageUsers.map((userId) => usersById[userId]);
+
+  const [alignment, setAlignment] = React.useState("incoming");
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
   useEffect(() => {
     dispatch(
       getFriendRequestListAsync({
         page: page,
         name: filterName,
+        requestType: alignment,
       })
     );
-  }, [filterName, page, dispatch]);
+  }, [filterName, page, dispatch, alignment]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -43,6 +53,17 @@ function FriendRequests() {
       <Typography variant="h4" sx={{ mb: 3 }}>
         Friend Requests
       </Typography>
+      <Stack alignItems="center">
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          exclusive
+          onChange={handleChange}
+        >
+          <ToggleButton value="incoming">Incoming Requests</ToggleButton>
+          <ToggleButton value="outgoing">Outgoing Requests</ToggleButton>
+        </ToggleButtonGroup>
+      </Stack>
       <Card sx={{ p: 3 }}>
         <Stack spacing={2}>
           <Stack direction={{ xs: "column", md: "row" }} alignItems="center">
