@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
 import { POST_PER_PAGE } from "../../app/config";
+import { cloudinaryUpload } from "../../utils/cloundinary";
+import { toast } from "react-toastify";
 
 const initialState = {
   isLoading: false,
@@ -62,10 +64,19 @@ export const createPostAsync =
   async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await apiService.post("/posts", { content, image });
+      //upload img to cloudinary
+      const imgUrl = await cloudinaryUpload(image);
+
+      const response = await apiService.post("/posts", {
+        content,
+        image: imgUrl,
+      });
+
       dispatch(slice.actions.createPostSuccess(response.data));
+      toast.success("Create Post successfully");
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -82,6 +93,7 @@ export const getPostListAsync =
       dispatch(slice.actions.getPostSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 
