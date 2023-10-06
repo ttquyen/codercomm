@@ -9,7 +9,7 @@ export const cloudinaryUpload = async (image) => {
     formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
     const response = await axios({
-      url: `https://cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      url: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
       method: "POST",
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
