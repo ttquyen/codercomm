@@ -3,6 +3,7 @@ import apiService from "../../app/apiService";
 import { POST_PER_PAGE } from "../../app/config";
 import { cloudinaryUpload } from "../../utils/cloundinary";
 import { toast } from "react-toastify";
+import _, { toString } from "lodash";
 
 const initialState = {
   isLoading: false,
@@ -56,6 +57,18 @@ const slice = createSlice({
     resetPost(state, action) {
       state.postsById = {};
       state.currentPagePosts = [];
+    },
+    editPostSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const editedPost = action.payload;
+
+      state.postsById[editedPost._id].content = editedPost.content;
+      state.postsById[editedPost._id].image = editedPost.image;
+    },
+    deletePostSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
     },
   },
 });
@@ -117,4 +130,41 @@ export const sendPostReactionAsync =
       dispatch(slice.actions.hasError(error.message));
     }
   };
+
+export const editPostAsync =
+  ({ postId, content, image }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      //upload img to cloudinary
+      let imgUrl;
+      if (image) {
+        imgUrl = await cloudinaryUpload(image);
+      }
+
+      const response = await apiService.put(`/posts/${postId}`, {
+        content,
+        image: imgUrl,
+      });
+
+      dispatch(slice.actions.editPostSuccess(response.data));
+      toast.success("Edit Post successfully");
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+export const deletePostAsync = (postId) => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService.delete(`/posts/${postId}`);
+
+    dispatch(slice.actions.deletePostSuccess(postId));
+    toast.success("Delete Post successfully");
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
 export default slice.reducer;

@@ -6,20 +6,53 @@ import {
   CardMedia,
   IconButton,
   Link,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
-import React from "react";
+import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { fDateTime } from "../../utils/formatTime";
 import { Link as RouterLink } from "react-router-dom";
 import PostReaction from "./PostReaction";
 import CommentList from "../comment/CommentList";
 import CommentForm from "../comment/CommentForm";
+import EditPostDialog from "./EditPostDialog";
+import DeletePostDialog from "./DetelePostDialog";
+import { useDispatch } from "react-redux";
+import { getPostListAsync } from "./postSlice";
+import useAuth from "../../hooks/useAuth";
 
 function PostCard({ post }) {
   const { author, updatedAt, image, content, _id } = post;
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openDel, setOpenDel] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+  const { user } = useAuth();
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleEditPost = () => {
+    handleClose();
+    setOpenEdit(true);
+  };
+  const handleDeletePost = () => {
+    handleClose();
+    setOpenDel(true);
+  };
+
+  const handleCallBack = (message) => {
+    if (message === "OK") {
+      dispatch(getPostListAsync({ userId: user._id, page: 1 }));
+    }
+  };
   return (
     <Card>
       <CardHeader
@@ -33,7 +66,7 @@ function PostCard({ post }) {
           />
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={handleMenu}>
             <MoreVertIcon />
           </IconButton>
         }
@@ -85,6 +118,36 @@ function PostCard({ post }) {
         <CommentList postId={_id} />
         <CommentForm postId={_id} />
       </Stack>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleEditPost}>Edit</MenuItem>
+        <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
+      </Menu>
+      <EditPostDialog
+        open={openEdit}
+        setOpen={setOpenEdit}
+        post={post}
+        callback={handleCallBack}
+      />
+      <DeletePostDialog
+        open={openDel}
+        setOpen={setOpenDel}
+        post={post}
+        callback={handleCallBack}
+      />
     </Card>
   );
 }
