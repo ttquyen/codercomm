@@ -142,7 +142,7 @@ function AuthProvider({ children }) {
     });
     const { user, accessToken } = response.data;
     setSession(accessToken); //save the accessToken to header of apiService
-    dispatch({ type: LOGIN_SUCCESS, payload: user });
+    dispatch({ type: LOGIN_SUCCESS, payload: { user } });
     callback(); //navigate to homepage when login success
   };
 
@@ -154,7 +154,7 @@ function AuthProvider({ children }) {
     });
     const { user, accessToken } = response.data;
     setSession(accessToken); //save the accessToken to header of apiService
-    dispatch({ type: REGISTER_SUCCESS, payload: user });
+    dispatch({ type: REGISTER_SUCCESS, payload: { user } });
     callback();
   };
 
