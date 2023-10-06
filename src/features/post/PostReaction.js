@@ -11,7 +11,6 @@ function PostReaction({ post }) {
   const dispatch = useDispatch();
 
   const handleClick = (emoji) => {
-    console.log(emoji);
     dispatch(sendPostReactionAsync({ postId: post._id, emoji }));
   };
   return (

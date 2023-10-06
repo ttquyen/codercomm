@@ -51,7 +51,6 @@ const slice = createSlice({
     sendCommentReactionSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      console.log(action.payload);
       const { commentId, reactions } = action.payload;
       state.commentsById[commentId].reactions = { ...reactions };
     },
