@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getCommentListAsync } from "./commentSlice";
 import { COMMENT_PER_POST } from "../../app/config";

@@ -3,7 +3,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AccountGeneral from "../features/user/AccountGeneral";
 import AccountSocialLink from "../features/user/AccountSocialLink";
 import useAuth from "../hooks/useAuth";
-import { Box, Card, Container, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
 import { capitalCase } from "change-case";
 
 import ShareIcon from "@mui/icons-material/Share";

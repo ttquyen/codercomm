@@ -23,7 +23,6 @@ function PostForm() {
   });
   const {
     handleSubmit,
-    setError,
     reset,
     setValue,
     formState: { isSubmitting },
@@ -45,7 +44,6 @@ function PostForm() {
   );
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(createPostAsync(data)).then(() => reset());
   };
 
