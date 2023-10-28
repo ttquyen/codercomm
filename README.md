@@ -1,6 +1,52 @@
-<!-- Test account
-username: quyen.codercomm@test.vn
-password:123456 -->
+# CoderComm
+
+## Functional Specification
+
+CoderComm is a social network that allows people to join by creating accounts. Each user should provide a name, an email, and password to create a new account. The email address should not link to any account in the system.
+
+After joining the CoderComm, users can update their profile info like Avatar, Company, Job title, Social links, and a short description about themselves.
+
+Users can write Posts that contain text content and an image. The new posts will be shown on the user profile page, allowing other user to comment. Users can also react with like or dislike on a post or a comment.
+
+User can send requests to other users who have an open relationship with them. Users can accept or reject a friend request. After accepting a friend request, both become friends, and they can see posts of each other.
+
+## User Stories
+
+### Authentication
+
+-   [x] As a user, I can register for a new account with name, email and password.
+-   [x] As a user, I can sign in with my email and password.
+
+### Users
+
+-   [x] As a user, I can see a list od other users so that I can send, accept, or decline friend requests.
+-   [x] As a user, I can get my current profile info (stay signed in with refreshing page).
+-   [x] As a user, I can see a profile of a specific user given a user Id.
+-   [x] As a user, I can update my profile info like Avatar, Company, Job Title, Social Links, and short description
+
+### Posts and Comments
+
+-   [x] As a user, I can see a list of posts of one user.
+-   [x] As a user, I can create a mew post with text content and an image.
+-   [x] As a user, I can edit my posts.
+-   [x] As a user, I can delete my posts.
+-   [x] As a user, I can see a list of comments on a post.
+-   [x] As a user, I can write comments on a post.
+-   [x] As a user, I can update my comments.
+
+### Reactions
+
+-   [x] As a user, I can react like or dislike to a post or a comment.
+
+### Friends
+
+-   [x] As a user, I can see a list of users in system.
+-   [x] As a user, I can search a user by name in the user list of system.
+-   [x] As a user, I can send friend requests to another users.
+-   [x] As a user, I can cancel my friend request.
+-   [x] As a user, I can accept or reject an incoming friend request.
+-   [x] As a user, I can see my friend list.
+-   [x] As a user, I can remove my friends.
 
 # Getting Started with Create React App and Redux
 
@@ -8,7 +54,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+-   Please refer `.env.example` and add a new `.env` file in the same root.
+-   Note that the [Back-end server](https://github.com/ttquyen/codercomm-be) is running.
+
 In the project directory, you can run:
+
+### `npm install`
+
+Install all the packages and dependencies in the `package.json`
 
 ### `npm start`
 
@@ -17,11 +70,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -32,16 +80,6 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
