@@ -1,5 +1,7 @@
 # CoderComm
 
+The demo app is running on: https://quyentt-coder-comm.netlify.app/
+
 ## Functional Specification
 
 CoderComm is a social network that allows people to join by creating accounts. Each user should provide a name, an email, and password to create a new account. The email address should not link to any account in the system.
@@ -52,7 +54,9 @@ User can send requests to other users who have an open relationship with them. U
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
-## Available Scripts
+## Usage
+
+-   Register for a [Cloudinary](https://cloudinary.com/) account. And create a unsigned upload preset: https://cloudinary.com/documentation/upload_presets
 
 -   Please refer `.env.example` and add a new `.env` file in the same root.
 -   Note that the [Back-end server](https://github.com/ttquyen/codercomm-be) is running.
