@@ -162,6 +162,7 @@ export const deletePostAsync = (postId) => async (dispatch) => {
 
         dispatch(slice.actions.deletePostSuccess(postId));
         toast.success("Delete Post successfully");
+        dispatch(getCurrentUserProfile());
     } catch (error) {
         dispatch(slice.actions.hasError(error.message));
         toast.error(error.message);
